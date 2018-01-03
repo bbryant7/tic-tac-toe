@@ -8,7 +8,7 @@ class Board extends Component {
     this.state = {
       squares: Array(9).fill(null),
       isComputersTurn: false,
-      
+
     };
 
     this.resetGame = this.resetGame.bind(this);
