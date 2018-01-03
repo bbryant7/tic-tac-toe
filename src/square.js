@@ -1,32 +1,29 @@
 import React, { Component } from 'react';
+import { bindActionCreators } from 'redux';
+import {connect} from 'react-redux';
+import * as actions from './Actions/index.js';
 import './App.css';
 
 class Square extends Component {
 
-  constructor(props){
-    super(props)
+constructor(){
+  super();
 
-    this.state = {
-      value: null
-    }
-
-  this.handleMove = this.handleMove.bind(this)
-  };
-handleMove(){
-  this.setState({
-    value: 'X',
-  })
-console.log(this.state.value)
+  this.handleMove = this.handleMove.bind(this);
 }
-
+handleMove(){
+  this.props.onClick()
+}
 
   render() {
     return (
       <div>
-        <div className="square"  onClick={this.handleMove}>{this.state.value}</div>
+        <div className="square"  onClick={this.handleMove}>{this.props.value}</div>
       </div>
     )
   }
 }
+
+
 
 export default Square;
