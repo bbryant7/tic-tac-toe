@@ -7,13 +7,16 @@ class Board extends Component {
     super(props);
     this.state = {
       squares: Array(9).fill(null),
-      isComputersTurn: false
+      isComputersTurn: false,
+      gameWon: false,
     };
   }
 
   handleClick(i) {
     const squares = this.state.squares.slice();
-
+if (calculateWinner(squares)){
+  return;
+}
     if (this.state.isComputersTurn) {
       squares[i] = "X";
     } else {
@@ -92,11 +95,11 @@ function calculateWinner(squares) {
 
     }
   }
-  return null;
+  return false;
 }
 
 // function doesMatch(squares, [a, b, c]) {
-//   return squares[a] === squares[b] && squares[a] === squares[c]
+//   return squares[a]  === squares[b] && squares[a] === squares[c]
 // }
 
 export default Board;
