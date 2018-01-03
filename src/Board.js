@@ -8,8 +8,10 @@ class Board extends Component {
     this.state = {
       squares: Array(9).fill(null),
       isComputersTurn: false,
-      gameWon: false,
+      
     };
+
+    this.resetGame = this.resetGame.bind(this);
   }
 
   handleClick(i) {
@@ -29,6 +31,15 @@ if (calculateWinner(squares)){
     });
   }
 
+  resetGame(){
+    this.setState({
+      squares: Array(9).fill(null),
+      isComputersTurn: false,
+
+    })
+
+
+  }
   renderSquare(i) {
     return (
       <Square
@@ -49,6 +60,7 @@ if (calculateWinner(squares)){
     return (
       <div className="App">
         <h1> Tic-Tac-Toe </h1>
+        <h3> Computer is X | You are 0 </h3>
         <div className="status">{status}</div>
 
         <div className="board">
@@ -68,6 +80,7 @@ if (calculateWinner(squares)){
             {this.renderSquare(8)}
           </div>
         </div>
+        <button onClick={this.resetGame}> Play Again? </button>
       </div>
     );
   }
