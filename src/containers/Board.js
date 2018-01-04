@@ -1,6 +1,7 @@
 import React, { Component } from "react";
-import Square from "./square.js";
-import "./App.css";
+import Square from "../components/square.js";
+import calculateWinner from "../components/Game";
+import "../App.css";
 
 class Board extends Component {
   constructor(props) {
@@ -8,7 +9,7 @@ class Board extends Component {
     this.state = {
       squares: Array(9).fill(null),
       isComputersTurn: false,
-
+      buttonStyle: "none"
     };
 
     this.resetGame = this.resetGame.bind(this);
@@ -16,9 +17,12 @@ class Board extends Component {
 
   handleClick(i) {
     const squares = this.state.squares.slice();
-if (calculateWinner(squares)){
-  return;
-}
+    if (calculateWinner(squares)) {
+      this.setState({
+        buttonStyle: "block"
+      });
+      return;
+    }
     if (this.state.isComputersTurn) {
       squares[i] = "X";
     } else {
@@ -31,15 +35,13 @@ if (calculateWinner(squares)){
     });
   }
 
-  resetGame(){
+  resetGame() {
     this.setState({
       squares: Array(9).fill(null),
-      isComputersTurn: false,
-
-    })
-
-
+      isComputersTurn: false
+    });
   }
+
   renderSquare(i) {
     return (
       <Square
@@ -50,6 +52,10 @@ if (calculateWinner(squares)){
   }
 
   render() {
+    let buttonStyle = {
+      display: this.props.buttonStyle
+    };
+    console.log("buttonStyle", this.props.buttonStyle);
     const winner = calculateWinner(this.state.squares);
     let status;
     if (winner) {
@@ -80,39 +86,13 @@ if (calculateWinner(squares)){
             {this.renderSquare(8)}
           </div>
         </div>
-        <button onClick={this.resetGame}> Play Again? </button>
+        <button style={buttonStyle} onClick={this.resetGame}>
+          {" "}
+          Play Again?{" "}
+        </button>
       </div>
     );
   }
 }
-
-function calculateWinner(squares) {
-  const winningOptions = [
-    [0, 1, 2],
-    [3, 4, 5],
-    [6, 7, 8],
-    [0, 3, 6],
-    [1, 4, 7],
-    [2, 5, 8],
-    [0, 4, 8],
-    [2, 4, 6]
-  ];
-  console.log("you in here?");
-  for (let i = 0; i < winningOptions.length; i++) {
-    let [a, b, c] = winningOptions[i];
-    if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
-
-      console.log("winner winner chicken dinner");
-      console.log(squares[a]);
-      return squares[a];
-
-    }
-  }
-  return false;
-}
-
-// function doesMatch(squares, [a, b, c]) {
-//   return squares[a]  === squares[b] && squares[a] === squares[c]
-// }
 
 export default Board;
