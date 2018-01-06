@@ -1,44 +1,35 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 import Square from "../components/square.js";
 import calculateWinner from "../components/Game";
 import "../App.css";
+import { myTurn } from "../Actions/index";
+import { squares } from "../Actions/index";
+import { bindActionCreators } from "redux";
 
 class Board extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      squares: Array(9).fill(null),
-      isComputersTurn: false,
-      buttonStyle: "none"
+      squares: Array(9).fill(null)
     };
-
-    this.resetGame = this.resetGame.bind(this);
   }
 
   handleClick(i) {
+    this.props.myTurn();
+    console.log("is it my turn?", this.props.turn);
     const squares = this.state.squares.slice();
     if (calculateWinner(squares)) {
-      this.setState({
-        buttonStyle: "block"
-      });
       return;
     }
-    if (this.state.isComputersTurn) {
+    if (this.props.turn === false) {
       squares[i] = "X";
     } else {
       squares[i] = "O";
     }
-    console.log(squares);
-    this.setState({
-      squares: squares,
-      isComputersTurn: !this.state.isComputersTurn
-    });
-  }
 
-  resetGame() {
     this.setState({
-      squares: Array(9).fill(null),
-      isComputersTurn: false
+      squares: squares
     });
   }
 
@@ -52,16 +43,14 @@ class Board extends Component {
   }
 
   render() {
-    let buttonStyle = {
-      display: this.props.buttonStyle
-    };
-    console.log("buttonStyle", this.props.buttonStyle);
+    console.log("this.props.squares", this.props.squares);
+
     const winner = calculateWinner(this.state.squares);
     let status;
     if (winner) {
       status = "Winner: " + winner;
     } else {
-      status = "Next player: " + (this.state.isComputersTurn ? "X" : "O");
+      status = "Next player: " + (this.props.turn ? "X" : "O");
     }
     return (
       <div className="App">
@@ -86,13 +75,35 @@ class Board extends Component {
             {this.renderSquare(8)}
           </div>
         </div>
-        <button style={buttonStyle} onClick={this.resetGame}>
-          {" "}
-          Play Again?{" "}
-        </button>
+        <button>Play Again?</button>
       </div>
     );
   }
 }
 
-export default Board;
+function mapStateToProps(state) {
+  return {
+    turn: state,
+    squares: state
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators(
+    {
+      myTurn: myTurn,
+      squaresAction: squares
+    },
+    dispatch
+  );
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Board);
+
+// resetGame() {
+//   this.setState({
+//     squares: Array(9).fill(null),
+//     isComputersTurn: false
+//   });
+// }
+// this.resetGame = this.resetGame.bind(this);

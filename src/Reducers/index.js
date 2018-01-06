@@ -1,8 +1,10 @@
+import { combineReducers } from "redux";
+import myTurnReducer from "./computersTurnReducer";
+import squaresReducer from "./squaresReducer";
 
-export default function (state = true, action) {
-    switch(action.type) {
-        case 'MYTURN':
-            return state = !state;
-    }
-    return state;
-}
+const rootReducer = combineReducers({
+  turn: myTurnReducer,
+  squares: squaresReducer
+});
+
+export default rootReducer;

@@ -2,7 +2,6 @@ import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
 import Board from "./containers/Board";
-import registerServiceWorker from "./registerServiceWorker";
 import { Provider } from "react-redux";
 import { createStore } from "redux";
 import reducers from "./Reducers/index";
@@ -14,4 +13,3 @@ ReactDOM.render(
   </Provider>,
   document.getElementById("root")
 );
-registerServiceWorker();
