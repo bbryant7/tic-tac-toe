@@ -8,6 +8,7 @@ const winningOptions = [
   [0, 4, 8],
   [2, 4, 6]
 ];
+
 function calculateWinner(squares) {
   for (let i = 0; i < winningOptions.length; i++) {
     let [a, b, c] = winningOptions[i];
@@ -34,6 +35,14 @@ function computersMove(squares) {
 
 // function doesMatch(squares, [a, b, c]) {
 //   return squares[a] && squares[a] === squares[b] && squares[a] === squares[c]
+// }
+
+// function computerMove(squares) {
+//   for (var i = 0; i < winningOptions.length; i++) {
+//     if (squares[a] === squares[b]) {
+//       // select squares[c] for turn
+//     }
+//   }
 // }
 
 export default calculateWinner;
