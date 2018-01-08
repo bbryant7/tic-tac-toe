@@ -17,14 +17,16 @@ class Board extends Component {
 
   handleClick(i) {
     this.props.myTurn();
-    console.log("is it my turn?", this.props.turn);
+
     const squares = this.state.squares.slice();
     if (calculateWinner(squares)) {
       return;
     }
-    if (this.props.turn === false) {
+    if (!this.props.turn.turn) {
       squares[i] = "X";
+      console.log("X");
     } else {
+      console.log("O");
       squares[i] = "O";
     }
 
@@ -43,7 +45,7 @@ class Board extends Component {
   }
 
   render() {
-    console.log("this.props.squares", this.props.squares);
+    console.log("this.props.squares", this.props);
 
     const winner = calculateWinner(this.state.squares);
     let status;
@@ -83,8 +85,7 @@ class Board extends Component {
 
 function mapStateToProps(state) {
   return {
-    turn: state,
-    squares: state
+    turn: state
   };
 }
 

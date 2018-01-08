@@ -6,4 +6,5 @@ export default function squaresReducer(
     case "SQUARES":
       return state;
   }
+  return state;
 }
