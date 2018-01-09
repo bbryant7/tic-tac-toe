@@ -9,15 +9,12 @@ import { bindActionCreators } from "redux";
 class Board extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      squares: Array(9).fill(null)
-    };
   }
 
   handleClick(i) {
     this.props.myTurn();
 
-    const squares = this.state.squares.slice();
+    const squares = this.props.squares.squares;
     if (calculateWinner(squares)) {
       return;
     }
@@ -26,16 +23,12 @@ class Board extends Component {
     } else {
       squares[i] = "O";
     }
-
-    this.setState({
-      squares: squares
-    });
   }
 
   renderSquare(i) {
     return (
       <Square
-        value={this.state.squares[i]}
+        value={this.props.squares.squares[i]}
         onClick={() => this.handleClick(i)}
       />
     );
@@ -43,15 +36,13 @@ class Board extends Component {
 
   render() {
     console.log("this.props", this.props);
-    console.log("restartState", this.props.restartGame);
-    console.log("myTurn", this.props.myTurn);
-
-    const winner = calculateWinner(this.state.squares);
+    console.log("squares", this.props.squares);
+    const winner = calculateWinner(this.props.squares.squares);
     let status;
     if (winner) {
       status = "Winner: " + winner;
     } else {
-      status = "Next player: " + (this.props.turn ? "X" : "O");
+      status = "Next player: " + (this.props.turn ? "O" : "X");
     }
     return (
       <div className="App">
@@ -83,7 +74,6 @@ class Board extends Component {
 }
 
 function mapStateToProps(state) {
-  console.log("New State: ", state);
   return {
     turn: state.turn,
     squares: state.squares,
