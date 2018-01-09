@@ -18,20 +18,20 @@ function calculateWinner(squares) {
   }
   return false;
 }
-
-function computersMove(squares) {
-  for (let i = 0; i < winningOptions.length; i++) {
-    let [a, b, c] = winningOptions[i];
-    if (squares[a] === squares[b] && squares[c] === null) {
-      return squares[c];
-    } else if (squares[a] === squares[c] && squares[b] === null) {
-      return squares[b];
-    } else if (squares[b] === squares[c] && squares[a] === null) {
-      return squares[a];
-    }
-  }
-  return;
-}
+//
+// function computersMove(squares) {
+//   for (let i = 0; i < winningOptions.length; i++) {
+//     let [a, b, c] = winningOptions[i];
+//     if (squares[a] === squares[b] && squares[c] === null) {
+//       return squares[c];
+//     } else if (squares[a] === squares[c] && squares[b] === null) {
+//       return squares[b];
+//     } else if (squares[b] === squares[c] && squares[a] === null) {
+//       return squares[a];
+//     }
+//   }
+//   return;
+// }
 
 // function doesMatch(squares, [a, b, c]) {
 //   return squares[a] && squares[a] === squares[b] && squares[a] === squares[c]

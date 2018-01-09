@@ -3,8 +3,7 @@ import { connect } from "react-redux";
 import Square from "../components/square.js";
 import calculateWinner from "../components/Game";
 import "../App.css";
-import { myTurn } from "../Actions/index";
-import { squares } from "../Actions/index";
+import { myTurn, squares, restartGame } from "../Actions/index";
 import { bindActionCreators } from "redux";
 
 class Board extends Component {
@@ -22,11 +21,9 @@ class Board extends Component {
     if (calculateWinner(squares)) {
       return;
     }
-    if (!this.props.turn.turn) {
+    if (!this.props.turn) {
       squares[i] = "X";
-      console.log("X");
     } else {
-      console.log("O");
       squares[i] = "O";
     }
 
@@ -45,7 +42,9 @@ class Board extends Component {
   }
 
   render() {
-    console.log("this.props.squares", this.props);
+    console.log("this.props", this.props);
+    console.log("restartState", this.props.restartGame);
+    console.log("myTurn", this.props.myTurn);
 
     const winner = calculateWinner(this.state.squares);
     let status;
@@ -77,15 +76,18 @@ class Board extends Component {
             {this.renderSquare(8)}
           </div>
         </div>
-        <button>Play Again?</button>
+        <button onClick={this.props.restartGame}>Play Again?</button>
       </div>
     );
   }
 }
 
 function mapStateToProps(state) {
+  console.log("New State: ", state);
   return {
-    turn: state
+    turn: state.turn,
+    squares: state.squares,
+    restart: state.resetGame
   };
 }
 
@@ -93,18 +95,11 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators(
     {
       myTurn: myTurn,
-      squaresAction: squares
+      squaresAction: squares,
+      restartGame: restartGame
     },
     dispatch
   );
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Board);
-
-// resetGame() {
-//   this.setState({
-//     squares: Array(9).fill(null),
-//     isComputersTurn: false
-//   });
-// }
-// this.resetGame = this.resetGame.bind(this);
