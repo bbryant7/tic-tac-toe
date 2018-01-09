@@ -18,11 +18,13 @@ class Board extends Component {
     if (calculateWinner(squares)) {
       return;
     }
-    if (!this.props.turn) {
-      squares[i] = "X";
-    } else {
-      squares[i] = "O";
+
+    let move = "X";
+    if (this.props.turn) {
+      move = "O";
     }
+
+    this.props.squaresAction(i, move);
   }
 
   renderSquare(i) {
@@ -36,7 +38,7 @@ class Board extends Component {
 
   render() {
     console.log("this.props", this.props);
-    console.log("squares", this.props.squares);
+    console.log("renderGame", this.props.restartGame);
     const winner = calculateWinner(this.props.squares.squares);
     let status;
     if (winner) {
@@ -67,7 +69,7 @@ class Board extends Component {
             {this.renderSquare(8)}
           </div>
         </div>
-        <button onClick={this.props.restartGame}>Play Again?</button>
+        <button onClick={() => this.props.restartGame()}>Play Again?</button>
       </div>
     );
   }
