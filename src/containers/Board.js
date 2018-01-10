@@ -3,14 +3,10 @@ import { connect } from "react-redux";
 import Square from "../components/square.js";
 import calculateWinner from "../components/Game";
 import "../App.css";
-import { myTurn, squares, restartGame } from "../Actions/index";
+import { myTurn, squares, restartGame, computersMove } from "../Actions/index";
 import { bindActionCreators } from "redux";
 
 class Board extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   handleClick(i) {
     this.props.myTurn();
 
@@ -23,8 +19,8 @@ class Board extends Component {
     if (this.props.turn) {
       move = "O";
     }
-
     this.props.squaresAction(i, move);
+    this.props.computersMove(i, move);
   }
 
   renderSquare(i) {
@@ -88,7 +84,8 @@ function mapDispatchToProps(dispatch) {
     {
       myTurn: myTurn,
       squaresAction: squares,
-      restartGame: restartGame
+      restartGame: restartGame,
+      computersMove: computersMove
     },
     dispatch
   );

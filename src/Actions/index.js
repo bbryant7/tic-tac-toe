@@ -18,3 +18,11 @@ export function restartGame() {
     type: "RESTART_GAME"
   };
 }
+
+export function computersMove(i, move) {
+  return {
+    type: "COMPUTERS_MOVE",
+    i,
+    move
+  };
+}
